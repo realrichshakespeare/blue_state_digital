@@ -44,4 +44,25 @@ module BlueStateDigital
       event_attrs.to_json
     end
   end
+
+  class Events < CollectionResource
+    def search(filters = {})
+      from_response(connection.perform_request '/event/search_events', {}, "GET")
+    end
+
+    private
+
+    def from_response(string)
+      parsed_response = JSON.parse(string)
+      parsed_response.collect { |event| from_hash(event) }
+    end
+
+    def from_hash(hash)
+      attrs  = {}
+      Event::FIELDS.each do | field |
+        attrs[field] = hash[field.to_s] if hash[field.to_s].present?
+      end
+      Event.new(attrs)
+    end
+  end
 end
