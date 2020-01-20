@@ -10,8 +10,8 @@ module BlueStateDigital
       end
     end
 
-    FIELDS = [:event_id_obfuscated, :event_type_id, :creator_cons_id, :name, :description, :venue_name, :venue_country,
-              :venue_zip, :venue_city, :venue_state_cd, :start_date, :end_date, :local_timezone, :start_day, :start_time, :duration]
+    FIELDS = [:event_id_obfuscated, :event_type_id, :creator_cons_id, :name, :description, :start_date, :end_date, :local_timezone, :start_day, :start_time, :duration,
+              :venue_name, :venue_country, :venue_addr1, :venue_addr2 :venue_zip, :venue_city, :venue_state_cd]
     attr_accessor *FIELDS
 
     def save
