@@ -1,7 +1,7 @@
 module BlueStateDigital
   class Constituent < ApiDataModel
     FIELDS = [:id, :firstname, :lastname, :is_banned, :create_dt, :ext_id, :birth_dt, :gender,
-                  :emails, :addresses, :phones, :groups, :is_new]
+                  :emails, :addresses, :phones, :groups, :is_new, :guid]
     attr_accessor *FIELDS
     attr_accessor :group_ids
 
@@ -105,6 +105,12 @@ module BlueStateDigital
       cons_ids_concat = cons_ids.is_a?(Array) ? cons_ids.join(',') : cons_ids.to_s
 
       from_response(connection.perform_request('/cons/get_constituents_by_id', filter_parameters({:cons_ids => cons_ids_concat, :bundles=> bundles.join(',')}), "GET"))
+    end
+
+    def get_constituents_by_ext_id(ext_type, ext_ids, bundles = ['cons_group'])
+      ext_ids_concat = ext_ids.is_a?(Array) ? ext_ids.join(',') : ext_ids.to_s
+
+      from_response(connection.perform_request('/cons/get_constituents_by_ext_id', filter_parameters({:ext_type => ext_type, :ext_ids => ext_ids_concat, :bundles=> bundles.join(',')}), "GET"))
     end
 
     def get_constituents(filter, bundles = [ 'cons_group' ])
